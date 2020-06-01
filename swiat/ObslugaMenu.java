@@ -1,26 +1,19 @@
 package pl.edu.pg.eti.ksg.po.projekt2.swiat;
 
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Czlowiek;
-import pl.edu.pg.eti.ksg.po.projekt2.swiat.BudulecSwiata;
-import pl.edu.pg.eti.ksg.po.projekt2.swiat.Swiat;
+
+import javax.swing.*;
 
 public final class ObslugaMenu
 {
-    private static final char WYBOR_PLIK = 'p';
-    private static final char WYBOR_LOSOWO = 'l';
-
     private Swiat swiat;
     private BudulecSwiata budulec;
+    private JFrame okno;
 
     private void obslozInicjalizacjeSwiata()
     {
-        char wybor = '\0';
-        while (wybor != WYBOR_PLIK && wybor != WYBOR_LOSOWO)
-        {
-            //cout<<"Wczytac swiat z pliku (podaj "<<WYBOR_PLIK<<") czy wygenerowac losowy? (podaj "<<WYBOR_LOSOWO<<")"<<endl;
-            //cin>>wybor;
-        }
-        if (wybor == WYBOR_PLIK)
+        int odpowiedz = JOptionPane.showConfirmDialog (null, "Wczytac swiat z pliku czy wygenerowac losowy","Inicjalizacja", JOptionPane.YES_NO_OPTION);
+        if (odpowiedz == JOptionPane.YES_OPTION)
             obslozWczytanieSwiataZPliku();
         else
             obslozWygenerowanieSwiata();
@@ -50,8 +43,6 @@ public final class ObslugaMenu
 
     private void obslozSymulacje()
     {
-        //system("cls");
-        //cout<<"Symulowanie..."<<endl;
         swiat.WykonajTure();
         swiat.RysujSwiat();
     }
@@ -66,9 +57,7 @@ public final class ObslugaMenu
 
     private void obslozWczytanieSwiataZPliku()
     {
-        String nazwaPliku = "";
-        //cout<<"Podaj nazwe pliku"<<endl;
-        //cin>>nazwaPliku;
+        String nazwaPliku = JOptionPane.showInputDialog(null, "Podaj nazwę pliku");
         try
         {
             budulec.WczytajZPliku(swiat, nazwaPliku);
@@ -93,30 +82,23 @@ public final class ObslugaMenu
 
     private void obslozZapisDoPliku()
     {
-        char wybor = '\0';
-        //cout<<"Czy zapisac do pliku? (t/N)"<<endl;
-        //cin>>wybor;
-        if (wybor == 't')
+        int odpowiedz = JOptionPane.showConfirmDialog (okno, "Czy zapisac swiat do pliku?","Zapisac?", JOptionPane.YES_NO_OPTION);
+        if (odpowiedz == JOptionPane.YES_OPTION)
         {
-            String nazwaPliku = "";
-            //cout<<"Podaj nazwe pliku"<<endl;
-            //cin>>nazwaPliku;
+            String nazwaPliku = JOptionPane.showInputDialog(okno, "Podaj nazwę pliku");
             budulec.ZapiszDoPliku(swiat, nazwaPliku);
         }
     }
 
     public void Wykonaj()
     {
-        char wybor = '\0';
-
         obslozInicjalizacjeSwiata();
         swiat.RysujSwiat();
         while (true)
         {
             obslozTure();
-            //cout<<"Czy przejsc do nastepnej tury? (T/n)"<<endl;
-            //cin>>wybor;
-            if (wybor == 'n')
+            int odpowiedz = JOptionPane.showConfirmDialog (okno, "Czy zapisac swiat do pliku?","Zapisac?", JOptionPane.YES_NO_OPTION);
+            if (odpowiedz == JOptionPane.NO_OPTION)
                 break;
         }
     }

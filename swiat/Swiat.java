@@ -3,6 +3,8 @@ package pl.edu.pg.eti.ksg.po.projekt2.swiat;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.Organizm;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Czlowiek;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Swiat
@@ -39,9 +41,21 @@ public class Swiat
         komunikaty.clear();
     }
     
-    private void rysujMape()
+    private void rysujMape(JFrame okno)
     {
-
+        okno.removeAll();
+        for (int i = 0; i < wysokosc * szerokosc; i++)
+        {
+            Organizm organizm = GetOrganizmNaPozycji(i % szerokosc, i / wysokosc);
+            if (organizm == null)
+            {
+                JLabel pusteMiejsce = new JLabel(" ");
+                pusteMiejsce.setBounds(i % szerokosc * Organizm.BOK_KWADRATU_OZNACZENIA, i / wysokosc * Organizm.BOK_KWADRATU_OZNACZENIA, Organizm.BOK_KWADRATU_OZNACZENIA, Organizm.BOK_KWADRATU_OZNACZENIA);
+                okno.add(pusteMiejsce);
+            }
+            else
+                organizm.Rysuj(okno);
+        }
     }
     
     private void obsluzEwentualneKolizje(Organizm organizmZOstatniaAkcja)
@@ -206,9 +220,10 @@ public class Swiat
         return  wysokosc;
     }
 
-    public void RysujSwiat()
+    public void RysujSwiat(JFrame okno)
     {
-
+        rysujKomunikaty();
+        rysujMape(okno);
     }
 
     public Czlowiek SprobujZnalezcCzlowieka()
