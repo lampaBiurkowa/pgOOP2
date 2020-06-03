@@ -11,7 +11,7 @@ public class Swiat
 {
     private Organizm[] organizmy;
     private int iloscOrganizmow;
-    private ArrayList<String> komunikaty;
+    private ArrayList<String> komunikaty = new ArrayList<>();
     private int maxInicjatywa;
     private int numerTury;
     private int szerokosc, wysokosc;

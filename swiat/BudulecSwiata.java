@@ -227,10 +227,9 @@ public final class BudulecSwiata
 
     public void WczytajZPliku(Swiat swiat, String sciezka) throws FileNotFoundException
     {
-        String linia;
         File dane = new File(sciezka);
         Scanner skaner = new Scanner(dane);
-        linia = skaner.nextLine();
+        String linia = skaner.nextLine();
         wdrozMetadane(swiat, linia);
         for (int i = 0; i < swiat.GetWysokosc(); i++)
         {

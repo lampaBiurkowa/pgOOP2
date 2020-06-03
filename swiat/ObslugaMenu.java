@@ -3,6 +3,7 @@ package pl.edu.pg.eti.ksg.po.projekt2.swiat;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Czlowiek;
 
 import javax.swing.*;
+import java.io.File;
 
 public final class ObslugaMenu
 {
@@ -44,7 +45,7 @@ public final class ObslugaMenu
     private void obslozSymulacje()
     {
         swiat.WykonajTure();
-        swiat.RysujSwiat();
+        swiat.RysujSwiat(okno);
     }
 
     private void obslozTure()
@@ -58,12 +59,14 @@ public final class ObslugaMenu
     private void obslozWczytanieSwiataZPliku()
     {
         String nazwaPliku = JOptionPane.showInputDialog(null, "Podaj nazwę pliku");
+        File f = new File("C:/ngruza1/Java/studia/proj/la2/" + nazwaPliku)
         try
         {
-            budulec.WczytajZPliku(swiat, nazwaPliku);
+            budulec.WczytajZPliku(swiat, "C:/ngruza1/Java/studia/proj/la2/" + nazwaPliku);
         }
         catch (Exception e)
         {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -92,8 +95,11 @@ public final class ObslugaMenu
 
     public void Wykonaj()
     {
+        budulec = new BudulecSwiata();
+        swiat = new Swiat();
         obslozInicjalizacjeSwiata();
-        swiat.RysujSwiat();
+        okno = new JFrame();
+        swiat.RysujSwiat(okno);
         while (true)
         {
             obslozTure();
