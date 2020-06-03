@@ -10,6 +10,7 @@ public final class ObslugaMenu
     private Swiat swiat;
     private BudulecSwiata budulec;
     private JFrame okno;
+    private Mapa mapa;
 
     private void obslozInicjalizacjeSwiata()
     {
@@ -45,7 +46,7 @@ public final class ObslugaMenu
     private void obslozSymulacje()
     {
         swiat.WykonajTure();
-        swiat.RysujSwiat(okno);
+        swiat.RysujSwiat(mapa);
     }
 
     private void obslozTure()
@@ -59,7 +60,7 @@ public final class ObslugaMenu
     private void obslozWczytanieSwiataZPliku()
     {
         String nazwaPliku = JOptionPane.showInputDialog(null, "Podaj nazwę pliku");
-        File f = new File("C:/ngruza1/Java/studia/proj/la2/" + nazwaPliku)
+        File f = new File("C:/ngruza1/Java/studia/proj/la2/" + nazwaPliku);
         try
         {
             budulec.WczytajZPliku(swiat, "C:/ngruza1/Java/studia/proj/la2/" + nazwaPliku);
@@ -99,11 +100,16 @@ public final class ObslugaMenu
         swiat = new Swiat();
         obslozInicjalizacjeSwiata();
         okno = new JFrame();
-        swiat.RysujSwiat(okno);
+        okno.setSize(600, 600);
+        okno.setVisible(true);
+        okno.setLayout(null);
+        mapa = new Mapa(okno, swiat);
+        swiat.RysujSwiat(mapa);
         while (true)
         {
             obslozTure();
             int odpowiedz = JOptionPane.showConfirmDialog (okno, "Czy zapisac swiat do pliku?","Zapisac?", JOptionPane.YES_NO_OPTION);
+            odpowiedz = JOptionPane.showConfirmDialog (okno, "Czy przejść do następnej tury?","Następna tura?", JOptionPane.YES_NO_OPTION);
             if (odpowiedz == JOptionPane.NO_OPTION)
                 break;
         }

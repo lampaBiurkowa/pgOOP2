@@ -1,5 +1,6 @@
 package pl.edu.pg.eti.ksg.po.projekt2.organizmy;
 
+import pl.edu.pg.eti.ksg.po.projekt2.swiat.Mapa;
 import pl.edu.pg.eti.ksg.po.projekt2.swiat.Swiat;
 
 import javax.swing.*;
@@ -56,10 +57,8 @@ public abstract class Organizm
     public abstract void Akcja(Swiat swiat);
     public abstract void Kolizja(Swiat swiat, Organizm organizm);
 
-    public void Rysuj(JFrame okno)
+    public void Rysuj(Mapa mapa)
     {
-        JLabel oznaczenie = new JLabel(String.valueOf(znakASCII));
-        oznaczenie.setBounds(x * BOK_KWADRATU_OZNACZENIA, y * BOK_KWADRATU_OZNACZENIA, BOK_KWADRATU_OZNACZENIA, BOK_KWADRATU_OZNACZENIA);
-        okno.add(oznaczenie);
+        mapa.GetPole(x, y).setText(String.valueOf(znakASCII));
     }
 };

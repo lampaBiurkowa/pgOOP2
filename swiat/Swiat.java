@@ -41,20 +41,15 @@ public class Swiat
         komunikaty.clear();
     }
     
-    private void rysujMape(JFrame okno)
+    private void rysujMape(Mapa mapa)
     {
-        okno.removeAll();
         for (int i = 0; i < wysokosc * szerokosc; i++)
         {
             Organizm organizm = GetOrganizmNaPozycji(i % szerokosc, i / wysokosc);
             if (organizm == null)
-            {
-                JLabel pusteMiejsce = new JLabel(" ");
-                pusteMiejsce.setBounds(i % szerokosc * Organizm.BOK_KWADRATU_OZNACZENIA, i / wysokosc * Organizm.BOK_KWADRATU_OZNACZENIA, Organizm.BOK_KWADRATU_OZNACZENIA, Organizm.BOK_KWADRATU_OZNACZENIA);
-                okno.add(pusteMiejsce);
-            }
+                mapa.GetPole(i % szerokosc, i / wysokosc).setText("x");
             else
-                organizm.Rysuj(okno);
+                organizm.Rysuj(mapa);
         }
     }
     
@@ -220,10 +215,10 @@ public class Swiat
         return  wysokosc;
     }
 
-    public void RysujSwiat(JFrame okno)
+    public void RysujSwiat(Mapa mapa)
     {
         rysujKomunikaty();
-        rysujMape(okno);
+        rysujMape(mapa);
     }
 
     public Czlowiek SprobujZnalezcCzlowieka()
