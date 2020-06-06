@@ -3,10 +3,9 @@ package pl.edu.pg.eti.ksg.po.projekt2.swiat;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.Organizm;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.rosliny.*;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.*;
-import pl.edu.pg.eti.ksg.po.projekt2.swiat.Swiat;
 
+import javax.swing.*;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -14,7 +13,7 @@ import java.util.Scanner;
 public final class BudulecSwiata
 {
     private static final int ILOSC_ARGUMENOW_METADANYCH = 3, ILOSC_ARGUMENOW_SUPERMOCY = 2, ILOSC_ARGUMENOW_SILY = 3;
-    private static final int ILOSC_GATUNKOW_DO_LOSOWANIA = 10;
+    private static final int ILOSC_GATUNKOW_DO_LOSOWANIA = 11;
     private static final int X_INDEKS = 0, Y_INDEKS = 1;
     private static final int NUMER_TURY_INDEKS = 2;
     private static final int POZOSTALE_TURY_Z_SUPERMOCA_INDEKS = 0, ILOSC_TUR_DO_AKTYWACJI_SUPERMOCY_INDEKS = 1;
@@ -29,6 +28,8 @@ public final class BudulecSwiata
             swiat.DodajOrganizm(new BarszczSosnowskiego(x, y));
         else if (znak == Czlowiek.IDENTYFIKATOR_PLIKU)
             swiat.DodajOrganizm(new Czlowiek(x, y));
+        else if (znak == Cyberowca.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new Cyberowca(x, y));
         else if (znak == Guarana.IDENTYFIKATOR_PLIKU)
             swiat.DodajOrganizm(new Guarana(x, y));
         else if (znak == Lis.IDENTYFIKATOR_PLIKU)
@@ -51,7 +52,7 @@ public final class BudulecSwiata
     {
         if (aktualnaIloscArg != oczekiwanaIloscArg)
         {
-            //cout<<"Blad! Ilosc argumentow w metadnych: "<<aktualnaIloscArg<<", oczekiwano: "<<oczekiwanaIloscArg<<endl;
+            JOptionPane.showMessageDialog(null, "Blad! Ilosc argumentow w metadnych: " + aktualnaIloscArg + ", oczekiwano: " + oczekiwanaIloscArg, "Błąd", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
         }
     }
@@ -204,7 +205,7 @@ public final class BudulecSwiata
     {
         if (iloscSztuk * ILOSC_GATUNKOW_DO_LOSOWANIA + 1 > swiat.GetSzerokosc() * swiat.GetWysokosc())
         {
-            //cout<<"Zbyt maly rozmiar swiat do zmieszczeia wszystkich gatunkow";
+            JOptionPane.showMessageDialog(null, "Zbyt maly rozmiar swiat do zmieszczeia wszystkich gatunkow", "Błąd", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -213,6 +214,7 @@ public final class BudulecSwiata
         {
             swiat.DodajOrganizm(new Antylopa(pozycje[i][0], pozycje[i][1])); i++;
             swiat.DodajOrganizm(new BarszczSosnowskiego(pozycje[i][0], pozycje[i][1])); i++;
+            swiat.DodajOrganizm(new Cyberowca(pozycje[i][0], pozycje[i][1])); i++;
             swiat.DodajOrganizm(new Guarana(pozycje[i][0], pozycje[i][1])); i++;
             swiat.DodajOrganizm(new Lis(pozycje[i][0], pozycje[i][1])); i++;
             swiat.DodajOrganizm(new Mlecz(pozycje[i][0], pozycje[i][1])); i++;

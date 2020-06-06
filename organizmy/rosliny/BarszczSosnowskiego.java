@@ -1,9 +1,11 @@
 package pl.edu.pg.eti.ksg.po.projekt2.organizmy.rosliny;
 
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.Organizm;
-import pl.edu.pg.eti.ksg.po.projekt2.organizmy.rosliny.Roslina;
+import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Cyberowca;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Zwierze;
 import pl.edu.pg.eti.ksg.po.projekt2.swiat.Swiat;
+
+import java.awt.*;
 
 public final class BarszczSosnowskiego extends Roslina
 {
@@ -22,6 +24,7 @@ public final class BarszczSosnowskiego extends Roslina
         nazwa = "Barszcz Sosnowskiego";
         sila = 10;
         znakASCII = IDENTYFIKATOR_PLIKU;
+        kolorPola = Color.BLUE;
     }
 
     @Override
@@ -37,7 +40,7 @@ public final class BarszczSosnowskiego extends Roslina
                     continue;
 
                 Organizm organizm = swiat.GetOrganizmNaPozycji(x + i, y + j);
-                if (organizm == null || !(organizm instanceof Zwierze))
+                if (!(organizm instanceof Zwierze) || organizm instanceof Cyberowca)
                     continue;
 
                 swiat.DodajKomunikat(nazwa + " zabija " + organizm.GetNazwa());

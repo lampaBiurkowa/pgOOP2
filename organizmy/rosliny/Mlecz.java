@@ -4,6 +4,7 @@ import pl.edu.pg.eti.ksg.po.projekt2.organizmy.Organizm;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.rosliny.Roslina;
 import pl.edu.pg.eti.ksg.po.projekt2.swiat.Swiat;
 
+import java.awt.*;
 import java.util.Random;
 
 public final class Mlecz extends Roslina
@@ -19,7 +20,7 @@ public final class Mlecz extends Roslina
         if (zmianaX == 0 && zmianaY == 0)
             return false;
 
-        if (!swiat.CzyPunktMiesciSieNaMapie(x + zmianaX, y + zmianaY) || swiat.CzyOrganizmJestNaPolu(x + zmianaX, y + zmianaY, nazwa))
+        if (!swiat.CzyPunktMiesciSieNaMapie(x + zmianaX, y + zmianaY) || swiat.CzyOrganizmJestNaPolu(x + zmianaX, y + zmianaY, this.getClass()))
             return false;
 
         for (int i = 0; i < ILOSC_PROB_ROZPRZESTRZENIENIA; i++)
@@ -41,6 +42,7 @@ public final class Mlecz extends Roslina
     public Mlecz(int x, int y)
     {
         super(x, y);
+        kolorPola = new Color(0, 200, 100);
         nazwa = "Mlecz";
         sila = 0;
         znakASCII = IDENTYFIKATOR_PLIKU;

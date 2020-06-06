@@ -47,7 +47,10 @@ public class Swiat
         {
             Organizm organizm = GetOrganizmNaPozycji(i % szerokosc, i / wysokosc);
             if (organizm == null)
-                mapa.GetPole(i % szerokosc, i / wysokosc).setText("x");
+            {
+                mapa.GetPole(i % szerokosc, i / wysokosc).setText(" ");
+                mapa.GetPole(i % szerokosc, i / wysokosc).setBackground(Color.WHITE);
+            }
             else
                 organizm.Rysuj(mapa);
         }
@@ -155,11 +158,11 @@ public class Swiat
         return x < szerokosc && y < wysokosc && x >= 0 && y >= 0;
     }
     
-    public boolean CzyOrganizmJestNaPolu(int x, int y, String nazwa)
+    public boolean CzyOrganizmJestNaPolu(int x, int y, Class klasa)
     {
         for (int i = 0; i < GetWysokosc() * GetSzerokosc(); i++)
-            if (organizmy[i] != null  && organizmy[i].GetX() == x && organizmy[i].GetY() == y && organizmy[i].GetNazwa().equals(nazwa))
-        return true;
+            if (organizmy[i] != null  && organizmy[i].GetX() == x && organizmy[i].GetY() == y && organizmy[i].getClass() == klasa)
+                return true;
 
         return false;
     }

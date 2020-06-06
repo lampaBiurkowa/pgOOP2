@@ -21,7 +21,7 @@ public abstract class Zwierze extends Organizm
                     if ((i == 0 && j == 0) || (i != 0 && j != 0) || x + j == previousX && y + i == previousY || !swiat.CzyPunktMiesciSieNaMapie(x + j, y + i))
                         continue;
 
-                    if (!swiat.CzyPoleZajete(x + j, y + i) || !swiat.CzyOrganizmJestNaPolu(x + j, y + i, nazwa))
+                    if (!swiat.CzyPoleZajete(x + j, y + i) || !swiat.CzyOrganizmJestNaPolu(x + j, y + i, this.getClass()))
                         return true;
                 }
 
@@ -38,7 +38,7 @@ public abstract class Zwierze extends Organizm
             if (x + zmianaX == previousX && y + zmianaY == previousY)
                 return false;
 
-            if (swiat.CzyPoleZajete(x + zmianaX, y + zmianaY) && swiat.CzyOrganizmJestNaPolu(x + zmianaX, y + zmianaY, nazwa))
+            if (swiat.CzyPoleZajete(x + zmianaX, y + zmianaY) && swiat.CzyOrganizmJestNaPolu(x + zmianaX, y + zmianaY, this.getClass()))
                 return false;
 
             Zwierze zwierze = zwrocInstancjeZwierzecia(x + zmianaX, y + zmianaY);

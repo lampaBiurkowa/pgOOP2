@@ -3,6 +3,7 @@ package pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.Organizm;
 import pl.edu.pg.eti.ksg.po.projekt2.swiat.Swiat;
 
+import java.awt.*;
 import java.util.Random;
 
 public final class Antylopa extends Zwierze
@@ -51,6 +52,7 @@ public final class Antylopa extends Zwierze
     public Antylopa(int x, int y)
     {
         super(x, y);
+        kolorPola = new Color(100, 50, 0);
         nazwa = "Antylopa";
         inicjatywa = 4;
         sila = 4;

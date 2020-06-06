@@ -4,6 +4,7 @@ import pl.edu.pg.eti.ksg.po.projekt2.organizmy.Organizm;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Zwierze;
 import pl.edu.pg.eti.ksg.po.projekt2.swiat.Swiat;
 
+import java.awt.*;
 import java.util.Random;
 
 public final class Zolw extends Zwierze
@@ -21,6 +22,7 @@ public final class Zolw extends Zwierze
     public Zolw(int x, int y)
     {
         super(x, y);
+        kolorPola = Color.RED;
         nazwa = "Zolw";
         inicjatywa = 1;
         sila = 2;

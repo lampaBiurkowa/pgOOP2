@@ -1,7 +1,7 @@
 package pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta;
-
-import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Zwierze;
 import pl.edu.pg.eti.ksg.po.projekt2.swiat.Swiat;
+
+import java.awt.*;
 
 public final class Lis extends Zwierze
 {
@@ -22,6 +22,7 @@ public final class Lis extends Zwierze
 
         return false;
     }
+
     @Override
     protected Lis zwrocInstancjeZwierzecia(int x, int y)
     {
@@ -33,6 +34,7 @@ public final class Lis extends Zwierze
     public Lis(int x, int y)
     {
         super(x, y);
+        kolorPola = Color.ORANGE;
         nazwa = "Lis";
         inicjatywa = 7;
         sila = 3;

@@ -4,15 +4,16 @@ import pl.edu.pg.eti.ksg.po.projekt2.swiat.Mapa;
 import pl.edu.pg.eti.ksg.po.projekt2.swiat.Swiat;
 
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class Organizm
 {
-    public static final int BOK_KWADRATU_OZNACZENIA = 50;
     protected String nazwa;
     protected int inicjatywa;
     protected int sila;
     protected int x, y;
     protected char znakASCII;
+    protected Color kolorPola;
     public Organizm(int x, int y)
     {
         this.x = x;
@@ -60,5 +61,6 @@ public abstract class Organizm
     public void Rysuj(Mapa mapa)
     {
         mapa.GetPole(x, y).setText(String.valueOf(znakASCII));
+        mapa.GetPole(x, y).setBackground(kolorPola);
     }
 };

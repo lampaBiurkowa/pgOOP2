@@ -4,6 +4,7 @@ import pl.edu.pg.eti.ksg.po.projekt2.organizmy.Organizm;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Zwierze;
 import pl.edu.pg.eti.ksg.po.projekt2.swiat.Swiat;
 
+import java.awt.*;
 import java.util.Random;
 
 public final class Czlowiek extends Zwierze
@@ -32,6 +33,7 @@ public final class Czlowiek extends Zwierze
 
         pozostalaIloscTurZSupermoca--;
     }
+
     private boolean czyDzialaSupermoc()
     {
         Random losowanie = new Random();
@@ -44,9 +46,11 @@ public final class Czlowiek extends Zwierze
     }
 
     public static final char IDENTYFIKATOR_PLIKU = 'C';
+
     public Czlowiek(int x, int y)
     {
         super(x, y);
+        kolorPola = Color.MAGENTA;
         nazwa = "Czlowiek";
         inicjatywa = 4;
         sila = 5;
@@ -55,6 +59,7 @@ public final class Czlowiek extends Zwierze
         iloscTurDoUzyciaSupermocy = 0;
         pozostalaIloscTurZSupermoca = 0;
     }
+
     @Override
     public void Akcja(Swiat swiat)
     {
@@ -72,6 +77,7 @@ public final class Czlowiek extends Zwierze
 
         aktualizujStanSupermocyPoUzyciu();
     }
+
     @Override
     public void Kolizja(Swiat swiat, Organizm organizm)
     {

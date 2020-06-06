@@ -73,13 +73,9 @@ public final class ObslugaMenu
 
     private void obslozWygenerowanieSwiata()
     {
-        int x = 0, y = 0, iloscSztuk = 0; //TODO
-        //cout<<"Podaj szerokosc"<<endl;
-        //cin>>x;
-        //cout<<"Podaj wysokosc"<<endl;
-        //cin>>y;
-        //cout<<"Podaj poczatkowa ilosc sztuk organizmow (oprocz czlowieka)"<<endl;
-        //cin>>iloscSztuk;
+        int x = Integer.parseInt(JOptionPane.showInputDialog("Podaj szerokosc"));
+        int y = Integer.parseInt(JOptionPane.showInputDialog("Podaj wysokosc"));
+        int iloscSztuk = Integer.parseInt(JOptionPane.showInputDialog("Podaj poczatkowa ilosc sztuk organizmow (oprocz czlowieka)"));
         swiat.Stworz(x, y, 0);
         budulec.RozstawOrganizmyLosowo(swiat, iloscSztuk);
     }
@@ -100,7 +96,6 @@ public final class ObslugaMenu
         swiat = new Swiat();
         obslozInicjalizacjeSwiata();
         okno = new JFrame();
-        okno.setSize(600, 600);
         okno.setVisible(true);
         okno.setLayout(null);
         mapa = new Mapa(okno, swiat);
@@ -108,10 +103,10 @@ public final class ObslugaMenu
         while (true)
         {
             obslozTure();
-            int odpowiedz = JOptionPane.showConfirmDialog (okno, "Czy zapisac swiat do pliku?","Zapisac?", JOptionPane.YES_NO_OPTION);
-            odpowiedz = JOptionPane.showConfirmDialog (okno, "Czy przejść do następnej tury?","Następna tura?", JOptionPane.YES_NO_OPTION);
+            int odpowiedz = JOptionPane.showConfirmDialog (okno, "Czy przejść do następnej tury?","Następna tura?", JOptionPane.YES_NO_OPTION);
             if (odpowiedz == JOptionPane.NO_OPTION)
                 break;
         }
+        okno.setVisible(false);
     }
 };

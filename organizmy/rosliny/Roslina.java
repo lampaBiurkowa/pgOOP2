@@ -19,7 +19,7 @@ public abstract class Roslina extends Organizm
                 if ((i == 0 && j == 0) || (i != 0 && j != 0) || !swiat.CzyPunktMiesciSieNaMapie(x + j, y + i))
                     continue;
 
-                if (!swiat.CzyPoleZajete(x + j, y + i) || !swiat.CzyOrganizmJestNaPolu(x + j, y + i, nazwa))
+                if (!swiat.CzyPoleZajete(x + j, y + i) || !swiat.CzyOrganizmJestNaPolu(x + j, y + i, this.getClass()))
                     return true;
             }
 
