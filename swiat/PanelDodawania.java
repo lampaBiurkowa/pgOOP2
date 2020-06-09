@@ -13,18 +13,23 @@ import java.awt.event.MouseEvent;
 
 public final class PanelDodawania
 {
-    private JFrame okno;
-    private JButton[] przyciski;
-
     private final int WYSOKOSC_PRZYCISKU = 30;
     private final int SZEROKOSC_PRZYCISKU = 150;
+    private final int WYSOKOSC_OKNA = 600;
+    private final int SZEROKOSC_OKNA = 800;
+    private final int ILOSC_GATUNKOW_DO_DODANIA = 11;
+
+    private JFrame okno;
+    private JButton[] przyciski = new JButton[ILOSC_GATUNKOW_DO_DODANIA];
+    private Organizm[] organizmy;
 
     public PanelDodawania(Swiat swiat, int x, int y)
     {
         okno = new JFrame("Dodaj organizm");
-
+        okno.setLayout(null);
         okno.setVisible(true);
-        Organizm[] organizmy = {new Antylopa(x, y), new BarszczSosnowskiego(x, y), new Cyberowca(x, y), new Guarana(x, y),
+        okno.setBounds(0, 0, SZEROKOSC_OKNA, WYSOKOSC_OKNA);
+        organizmy = new Organizm[]{new Antylopa(x, y), new BarszczSosnowskiego(x, y), new Cyberowca(x, y), new Guarana(x, y),
         new Lis(x, y), new Mlecz(x, y), new Owca(x, y), new Trawa(x, y), new Wilk(x, y), new Zolw(x, y)};
 
         for (int i = 0; i < organizmy.length; i++)

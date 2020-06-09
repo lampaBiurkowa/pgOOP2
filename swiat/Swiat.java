@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class Swiat
@@ -49,6 +50,13 @@ public class Swiat
     {
         for (int i = 0; i < wysokosc * szerokosc; i++)
         {
+            MouseListener[] zdarzenia = mapa.GetPole(i % szerokosc, i / wysokosc).getMouseListeners();
+            for (int j = 0; j < zdarzenia.length; j++)
+                mapa.GetPole(i % szerokosc, i / wysokosc).removeMouseListener(zdarzenia[j]);
+        }
+
+        for (int i = 0; i < wysokosc * szerokosc; i++)
+        {
             Organizm organizm = GetOrganizmNaPozycji(i % szerokosc, i / wysokosc);
             if (organizm == null)
             {
@@ -61,8 +69,8 @@ public class Swiat
                     public void mouseClicked(MouseEvent event)
                     {
                         oczekujeNaDodanie = true;
-                        System.out.println(event.getComponent());
                         panel = new PanelDodawania(referencjaSwiat, kopiaI % szerokosc, kopiaI / wysokosc);
+                        ((Component)event.getSource()).removeMouseListener(this);
                     }
                 });
             }

@@ -111,6 +111,7 @@ public final class ObslugaMenu
         {
             if (!swiat.GetOczekujeNaDodanie() && czyPrzejscDoNastepnejTury)
             {
+                System.out.println(swiat.GetNumerTury());
                 przyciskNastepnejTury.setEnabled(false);
                 obslozTure();
                 czyPrzejscDoNastepnejTury = false;
