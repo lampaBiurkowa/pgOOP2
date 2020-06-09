@@ -51,10 +51,10 @@ public final class BarszczSosnowskiego extends Roslina
     @Override
     public void Kolizja(Swiat swiat, Organizm organizm)
     {
-        if (organizm instanceof Zwierze)
-        {
-            swiat.DodajKomunikat(organizm.GetNazwa() + " zjadl " + nazwa + " i nie zyje");
-            swiat.UsunOrganizm(organizm);
-        }
+        if (!(organizm instanceof Zwierze) || organizm instanceof Cyberowca)
+            return;
+
+        swiat.DodajKomunikat(organizm.GetNazwa() + " zjadl " + nazwa + " i nie zyje");
+        swiat.UsunOrganizm(organizm);
     }
 };

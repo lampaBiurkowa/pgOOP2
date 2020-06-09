@@ -20,7 +20,7 @@ public final class Mapa
                 pola[i][j].setBackground(Color.WHITE);
                 pola[i][j].setSize(BOK_POLA, BOK_POLA);
                 pola[i][j].setOpaque(true);
-                pola[i][j].setBounds(j * BOK_POLA, i * BOK_POLA, BOK_POLA, BOK_POLA);
+                pola[i][j].setBounds(j * BOK_POLA, ObslugaMenu.WYSOKOSC_PRZYCISKU_MENU + i * BOK_POLA, BOK_POLA, BOK_POLA);
                 okno.add(pola[i][j]);
             }
 

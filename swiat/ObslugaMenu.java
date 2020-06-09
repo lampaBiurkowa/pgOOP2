@@ -3,6 +3,8 @@ package pl.edu.pg.eti.ksg.po.projekt2.swiat;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Czlowiek;
 
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 public final class ObslugaMenu
@@ -10,7 +12,13 @@ public final class ObslugaMenu
     private Swiat swiat;
     private BudulecSwiata budulec;
     private JFrame okno;
+    private JButton przyciskNastepnejTury;
+    private JButton przyciskZakonczenia;
     private Mapa mapa;
+    
+    private boolean czyPrzejscDoNastepnejTury;
+    public static final int WYSOKOSC_PRZYCISKU_MENU = 30;
+    public static final int SZEROKOSC_PRZYCISKU_MENU = 150;
 
     private void obslozInicjalizacjeSwiata()
     {
@@ -95,18 +103,55 @@ public final class ObslugaMenu
         budulec = new BudulecSwiata();
         swiat = new Swiat();
         obslozInicjalizacjeSwiata();
+        obsluzInicjalizcjeOkna();
+        mapa = new Mapa(okno, swiat);
+        swiat.RysujSwiat(mapa);
+        czyPrzejscDoNastepnejTury = true;
+        while (true)
+        {
+            if (!swiat.GetOczekujeNaDodanie() && czyPrzejscDoNastepnejTury)
+            {
+                przyciskNastepnejTury.setEnabled(false);
+                obslozTure();
+                czyPrzejscDoNastepnejTury = false;
+                przyciskNastepnejTury.setEnabled(true);
+            }
+        }
+    }
+
+
+    private void obsluzInicjalizcjeOkna()
+    {
         okno = new JFrame();
         okno.setVisible(true);
         okno.setLayout(null);
-        mapa = new Mapa(okno, swiat);
-        swiat.RysujSwiat(mapa);
-        while (true)
+
+        obsluzInicjalizacjePaskaMenu();
+
+        okno.add(przyciskNastepnejTury);
+        okno.add(przyciskZakonczenia);
+    }
+
+    private void obsluzInicjalizacjePaskaMenu()
+    {
+        przyciskNastepnejTury = new JButton("Następna tura");
+        przyciskNastepnejTury.setBounds(0, 0, SZEROKOSC_PRZYCISKU_MENU, WYSOKOSC_PRZYCISKU_MENU);
+        przyciskNastepnejTury.addMouseListener(new MouseAdapter()
         {
-            obslozTure();
-            int odpowiedz = JOptionPane.showConfirmDialog (okno, "Czy przejść do następnej tury?","Następna tura?", JOptionPane.YES_NO_OPTION);
-            if (odpowiedz == JOptionPane.NO_OPTION)
-                break;
-        }
-        okno.setVisible(false);
+            public void mouseClicked(MouseEvent event)
+            {
+                czyPrzejscDoNastepnejTury = true;
+            }
+        });
+        przyciskZakonczenia = new JButton("Zakończ");
+        przyciskZakonczenia.setBounds(SZEROKOSC_PRZYCISKU_MENU, 0, SZEROKOSC_PRZYCISKU_MENU, WYSOKOSC_PRZYCISKU_MENU);
+        przyciskZakonczenia.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent event)
+            {
+                okno.setVisible(false);
+                System.exit(0);
+            }
+        });
     }
 };

@@ -5,6 +5,8 @@ import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Czlowiek;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Swiat
@@ -15,6 +17,8 @@ public class Swiat
     private int maxInicjatywa;
     private int numerTury;
     private int szerokosc, wysokosc;
+    private boolean oczekujeNaDodanie;
+    private PanelDodawania panel;
 
     private int getMaxInicjatywa(int ograniczenieGorneWlaczne)
     {
@@ -50,6 +54,17 @@ public class Swiat
             {
                 mapa.GetPole(i % szerokosc, i / wysokosc).setText(" ");
                 mapa.GetPole(i % szerokosc, i / wysokosc).setBackground(Color.WHITE);
+                int kopiaI = i;
+                Swiat referencjaSwiat = this;
+                mapa.GetPole(i % szerokosc, i / wysokosc).addMouseListener(new MouseAdapter()
+                {
+                    public void mouseClicked(MouseEvent event)
+                    {
+                        oczekujeNaDodanie = true;
+                        System.out.println(event.getComponent());
+                        panel = new PanelDodawania(referencjaSwiat, kopiaI % szerokosc, kopiaI / wysokosc);
+                    }
+                });
             }
             else
                 organizm.Rysuj(mapa);
@@ -218,6 +233,16 @@ public class Swiat
         return  wysokosc;
     }
 
+    public boolean GetOczekujeNaDodanie()
+    {
+        return oczekujeNaDodanie;
+    }
+
+    public void SetOczekujeNaDodanie(boolean oczekujeNaDodanie)
+    {
+        this.oczekujeNaDodanie = oczekujeNaDodanie;
+    }
+
     public void RysujSwiat(Mapa mapa)
     {
         rysujKomunikaty();
@@ -236,6 +261,7 @@ public class Swiat
 
     public void Stworz(int szerokosc, int wysokosc, int numerTury)
     {
+        oczekujeNaDodanie = false;
         iloscOrganizmow = 0;
         maxInicjatywa = 7;
         this.numerTury = numerTury;
