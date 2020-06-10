@@ -45,6 +45,7 @@ public final class PanelDodawania
                     swiat.DodajOrganizm(organizmy[kopiaI]);
                     schowaj();
                     swiat.SetOczekujeNaDodanie(false);
+                    swiat.RysujSwiat();
                 }
             });
         }

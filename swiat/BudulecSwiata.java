@@ -20,6 +20,13 @@ public final class BudulecSwiata
     private static final int ZWIEKSZENIE_SILY_INDEKS = 2;
     private static final char SEPARATOR_W_PLIKU = ',', PUSTE_POLE = '-', OZNACZENIE_SUPERMOCY = 'S';
 
+    private JFrame okno;
+
+    public BudulecSwiata(JFrame okno)
+    {
+        this.okno = okno;
+    }
+
     private void dodajOdpowiedniTypOrganizmu(Swiat swiat, char znak, int x, int y)
     {
         if (znak == Antylopa.IDENTYFIKATOR_PLIKU)
@@ -159,7 +166,7 @@ public final class BudulecSwiata
         int[] dane = new int[ILOSC_ARGUMENOW_METADANYCH];
         int iloscParametrow = wypelnijLiczbowaTabliceZPlikuIZwrocIlosc(zrodlo, dane, 0);
         obsluzPotencjalnyBladWczytywania(ILOSC_ARGUMENOW_METADANYCH, iloscParametrow);
-        swiat.Stworz(dane[X_INDEKS], dane[Y_INDEKS], dane[NUMER_TURY_INDEKS]);
+        swiat.Stworz(dane[X_INDEKS], dane[Y_INDEKS], dane[NUMER_TURY_INDEKS], okno);
     }
 
     private void wdrozPozostaleInformacjeZPliku(Swiat swiat, String zrodlo)
@@ -273,7 +280,7 @@ public final class BudulecSwiata
                 if (j != swiat.GetSzerokosc() - 1)
                     linia += SEPARATOR_W_PLIKU;
             }
-            linieMapy.add(linia);
+            linieMapy.add(linia + "\n");
         }
 
         try

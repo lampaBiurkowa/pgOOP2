@@ -20,6 +20,7 @@ public class Swiat
     private int szerokosc, wysokosc;
     private boolean oczekujeNaDodanie;
     private PanelDodawania panel;
+    private Mapa mapa;
 
     private int getMaxInicjatywa(int ograniczenieGorneWlaczne)
     {
@@ -50,26 +51,26 @@ public class Swiat
     {
         for (int i = 0; i < wysokosc * szerokosc; i++)
         {
-            MouseListener[] zdarzenia = mapa.GetPole(i % szerokosc, i / wysokosc).getMouseListeners();
+            MouseListener[] zdarzenia = mapa.GetPole(i % szerokosc, i / szerokosc).getMouseListeners();
             for (int j = 0; j < zdarzenia.length; j++)
-                mapa.GetPole(i % szerokosc, i / wysokosc).removeMouseListener(zdarzenia[j]);
+                mapa.GetPole(i % szerokosc, i / szerokosc).removeMouseListener(zdarzenia[j]);
         }
 
         for (int i = 0; i < wysokosc * szerokosc; i++)
         {
-            Organizm organizm = GetOrganizmNaPozycji(i % szerokosc, i / wysokosc);
+            Organizm organizm = GetOrganizmNaPozycji(i % szerokosc, i / szerokosc);
             if (organizm == null)
             {
-                mapa.GetPole(i % szerokosc, i / wysokosc).setText(" ");
-                mapa.GetPole(i % szerokosc, i / wysokosc).setBackground(Color.WHITE);
+                mapa.GetPole(i % szerokosc, i / szerokosc).setText(" ");
+                mapa.GetPole(i % szerokosc, i / szerokosc).setBackground(Color.WHITE);
                 int kopiaI = i;
                 Swiat referencjaSwiat = this;
-                mapa.GetPole(i % szerokosc, i / wysokosc).addMouseListener(new MouseAdapter()
+                mapa.GetPole(i % szerokosc, i / szerokosc).addMouseListener(new MouseAdapter()
                 {
                     public void mouseClicked(MouseEvent event)
                     {
                         oczekujeNaDodanie = true;
-                        panel = new PanelDodawania(referencjaSwiat, kopiaI % szerokosc, kopiaI / wysokosc);
+                        panel = new PanelDodawania(referencjaSwiat, kopiaI % szerokosc, kopiaI / szerokosc);
                         ((Component)event.getSource()).removeMouseListener(this);
                     }
                 });
@@ -251,7 +252,7 @@ public class Swiat
         this.oczekujeNaDodanie = oczekujeNaDodanie;
     }
 
-    public void RysujSwiat(Mapa mapa)
+    public void RysujSwiat()
     {
         rysujKomunikaty();
         rysujMape(mapa);
@@ -267,7 +268,7 @@ public class Swiat
         return null;
     }
 
-    public void Stworz(int szerokosc, int wysokosc, int numerTury)
+    public void Stworz(int szerokosc, int wysokosc, int numerTury, JFrame okno)
     {
         oczekujeNaDodanie = false;
         iloscOrganizmow = 0;
@@ -275,6 +276,7 @@ public class Swiat
         this.numerTury = numerTury;
         this.szerokosc = szerokosc;
         this.wysokosc = wysokosc;
+        mapa = new Mapa(okno, this);
         organizmy = new Organizm[wysokosc * szerokosc];
         for (int i = 0; i < wysokosc * szerokosc; i++)
             organizmy[i] = null;

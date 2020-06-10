@@ -24,7 +24,7 @@ public final class Mapa
                 okno.add(pola[i][j]);
             }
 
-        okno.setSize(BOK_POLA * (swiat.GetSzerokosc() + 2), BOK_POLA * (swiat.GetWysokosc() + 2));
+        okno.setSize(BOK_POLA * (swiat.GetSzerokosc() + 1), ObslugaMenu.WYSOKOSC_PRZYCISKU_MENU + BOK_POLA * (swiat.GetWysokosc() + 2));
     }
 
     public JLabel GetPole(int x, int y)

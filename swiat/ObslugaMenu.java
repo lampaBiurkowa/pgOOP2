@@ -14,7 +14,6 @@ public final class ObslugaMenu
     private JFrame okno;
     private JButton przyciskNastepnejTury;
     private JButton przyciskZakonczenia;
-    private Mapa mapa;
     
     private boolean czyPrzejscDoNastepnejTury;
     public static final int WYSOKOSC_PRZYCISKU_MENU = 30;
@@ -54,7 +53,7 @@ public final class ObslugaMenu
     private void obslozSymulacje()
     {
         swiat.WykonajTure();
-        swiat.RysujSwiat(mapa);
+        swiat.RysujSwiat();
     }
 
     private void obslozTure()
@@ -68,10 +67,10 @@ public final class ObslugaMenu
     private void obslozWczytanieSwiataZPliku()
     {
         String nazwaPliku = JOptionPane.showInputDialog(null, "Podaj nazwę pliku");
-        File f = new File("C:/ngruza1/Java/studia/proj/la2/" + nazwaPliku);
+        File f = new File(nazwaPliku);
         try
         {
-            budulec.WczytajZPliku(swiat, "C:/ngruza1/Java/studia/proj/la2/" + nazwaPliku);
+            budulec.WczytajZPliku(swiat, nazwaPliku);
         }
         catch (Exception e)
         {
@@ -84,7 +83,7 @@ public final class ObslugaMenu
         int x = Integer.parseInt(JOptionPane.showInputDialog("Podaj szerokosc"));
         int y = Integer.parseInt(JOptionPane.showInputDialog("Podaj wysokosc"));
         int iloscSztuk = Integer.parseInt(JOptionPane.showInputDialog("Podaj poczatkowa ilosc sztuk organizmow (oprocz czlowieka)"));
-        swiat.Stworz(x, y, 0);
+        swiat.Stworz(x, y, 0, okno);
         budulec.RozstawOrganizmyLosowo(swiat, iloscSztuk);
     }
 
@@ -100,18 +99,20 @@ public final class ObslugaMenu
 
     public void Wykonaj()
     {
-        budulec = new BudulecSwiata();
+        obsluzInicjalizcjeOkna();
+        budulec = new BudulecSwiata(okno);
         swiat = new Swiat();
         obslozInicjalizacjeSwiata();
-        obsluzInicjalizcjeOkna();
-        mapa = new Mapa(okno, swiat);
-        swiat.RysujSwiat(mapa);
-        czyPrzejscDoNastepnejTury = true;
+        swiat.RysujSwiat();
+        czyPrzejscDoNastepnejTury = false;
         while (true)
         {
+            try {
+                wait(100);
+            } catch (Exception e) {
+            }
             if (!swiat.GetOczekujeNaDodanie() && czyPrzejscDoNastepnejTury)
             {
-                System.out.println(swiat.GetNumerTury());
                 przyciskNastepnejTury.setEnabled(false);
                 obslozTure();
                 czyPrzejscDoNastepnejTury = false;
