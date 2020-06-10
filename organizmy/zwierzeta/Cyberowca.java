@@ -9,13 +9,13 @@ import java.util.Random;
 
 public final class Cyberowca extends Zwierze
 {
+    public static final char IDENTYFIKATOR_PLIKU = 'X';
+
     @Override
     protected Cyberowca zwrocInstancjeZwierzecia(int x, int y)
     {
         return new Cyberowca(x, y);
     }
-
-    public static final char IDENTYFIKATOR_PLIKU = 'X';
 
     public Cyberowca(int x, int y)
     {

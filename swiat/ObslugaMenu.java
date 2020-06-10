@@ -34,20 +34,22 @@ public final class ObslugaMenu
         if (czlowiek == null)
             return;
 
-        char wybor = '\0';
-
-        //cout<<"Twoja sila: "<<czlowiek.GetSila()<<endl;
-        //cout<<"Pozostala ilosc tur z wazna supermoca: "<<czlowiek.GetPozostalaIloscTurZSupermoca()<<endl;
-        //cout<<"Ilosc tur do ponownego aktywowania supermocy: "<<czlowiek.GetIloscTurDoUzyciaSupermocy() + czlowiek.GetPozostalaIloscTurZSupermoca()<<endl;
+        JOptionPane.showMessageDialog(okno, getTekstInformacji(czlowiek), "Stan gry", JOptionPane.INFORMATION_MESSAGE);
         if (czlowiek.GetIloscTurDoUzyciaSupermocy() == 0)
         {
-            //cout<<"Czy aktywowac supermoc? (t/N)";
-            //cin>>wybor;
-            if (wybor == 't')
+            int wybor = JOptionPane.showConfirmDialog(okno, "Czy aktywować supermoc?", "Supermoc", JOptionPane.YES_NO_OPTION);
+            if (wybor == JOptionPane.YES_OPTION)
                 czlowiek.SprobujAktywowacSuperMoc();
         }
-        //cout<<"Wybierz strzalka kierunek ruchu"<<endl;
         czlowiek.WczytajInformacjeORuchu(swiat);
+    }
+
+    private String getTekstInformacji(Czlowiek czlowiek)
+    {
+        String informacjeSila = "Twoja siła: " + czlowiek.GetSila();
+        String informacjeTuryZSupermoca = "\nPozostala ilosc tur z wazna supermoca: " + czlowiek.GetPozostalaIloscTurZSupermoca();
+        String informacjePonownaAktywacja = "\nIlosc tur do ponownego aktywowania supermocy: " + (czlowiek.GetIloscTurDoUzyciaSupermocy() + czlowiek.GetPozostalaIloscTurZSupermoca());
+        return informacjeSila + informacjeTuryZSupermoca + informacjePonownaAktywacja;
     }
 
     private void obslozSymulacje()
@@ -58,7 +60,6 @@ public final class ObslugaMenu
 
     private void obslozTure()
     {
-        //cout<<"Numer tury: "<<swiat.GetNumerTury() + 1<<endl;
         obslozRuchCzlowiekaJezeliIstnieje();
         obslozSymulacje();
         obslozZapisDoPliku();

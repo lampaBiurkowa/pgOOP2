@@ -9,6 +9,7 @@ import java.awt.*;
 
 public final class BarszczSosnowskiego extends Roslina
 {
+    public static final char IDENTYFIKATOR_PLIKU = 'b';
     private static final int ZASIEG_ZNISZCZEN = 1;
 
     @Override
@@ -16,7 +17,6 @@ public final class BarszczSosnowskiego extends Roslina
     {
         return new BarszczSosnowskiego(x, y);
     }
-    public static final char IDENTYFIKATOR_PLIKU = 'b';
 
     public BarszczSosnowskiego(int x, int y)
     {

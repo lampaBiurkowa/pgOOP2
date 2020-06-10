@@ -8,13 +8,13 @@ import java.awt.*;
 
 public final class Trawa extends Roslina
 {
+    public static final char IDENTYFIKATOR_PLIKU = 't';
+
     @Override
     protected Trawa zwrocInstancjeRosliny(int x, int y)
     {
         return new Trawa(x, y);
     }
-
-    public static final char IDENTYFIKATOR_PLIKU = 't';
 
     public Trawa(int x, int y)
     {

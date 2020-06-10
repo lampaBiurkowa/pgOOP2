@@ -8,13 +8,13 @@ import java.awt.*;
 
 public final class WilczeJagody extends Roslina
 {
+    public static final char IDENTYFIKATOR_PLIKU = 'w';
+
     @Override
     protected WilczeJagody zwrocInstancjeRosliny(int x, int y)
     {
         return new WilczeJagody(x, y);
     }
-
-    public static final char IDENTYFIKATOR_PLIKU = 'w';
 
     public WilczeJagody(int x, int y)
     {

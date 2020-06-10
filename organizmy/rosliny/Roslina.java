@@ -7,9 +7,30 @@ import java.util.Random;
 
 public abstract class Roslina extends Organizm
 {
-    private static final int DOMYSLNY_KROK = 1;
     protected static final int SZANSE_NA_ROZPRZESTRZENIENIE_W_PROCENTACH = 20;
     protected static final int ZASIEG_USTAWIENIA_POTOMKA = 1;
+    private static final int DOMYSLNY_KROK = 1;
+    protected abstract Roslina zwrocInstancjeRosliny(int x, int y);
+
+    public Roslina(int x, int y)
+    {
+        super(x, y);
+        inicjatywa = 0;
+    }
+
+    @Override
+    public void Akcja(Swiat swiat)
+    {
+        Random losownie = new Random();
+        if (czyMaGdzieUstawicPotomka(swiat) && losownie.nextInt(100) < SZANSE_NA_ROZPRZESTRZENIENIE_W_PROCENTACH)
+        {
+            boolean czyUdaloSieZasiac = false;
+            while (!czyUdaloSieZasiac)
+                czyUdaloSieZasiac = sprobujZasiacRosline(swiat);
+
+            swiat.DodajKomunikat(nazwa + " zasialo brata");
+        }
+    }
 
     protected boolean czyMaGdzieUstawicPotomka(Swiat swiat)
     {
@@ -40,27 +61,5 @@ public abstract class Roslina extends Organizm
         Roslina roslina = zwrocInstancjeRosliny(x + zmianaX, y + zmianaY);
         swiat.DodajOrganizm(roslina);
         return true;
-    }
-
-    protected abstract Roslina zwrocInstancjeRosliny(int x, int y);
-
-    public Roslina(int x, int y)
-    {
-        super(x, y);
-        inicjatywa = 0;
-    }
-
-    @Override
-    public void Akcja(Swiat swiat)
-    {
-        Random losownie = new Random();
-        if (czyMaGdzieUstawicPotomka(swiat) && losownie.nextInt(100) < SZANSE_NA_ROZPRZESTRZENIENIE_W_PROCENTACH)
-        {
-            boolean czyUdaloSieZasiac = false;
-            while (!czyUdaloSieZasiac)
-                czyUdaloSieZasiac = sprobujZasiacRosline(swiat);
-
-            swiat.DodajKomunikat(nazwa + " zasialo brata");
-        }
     }
 };

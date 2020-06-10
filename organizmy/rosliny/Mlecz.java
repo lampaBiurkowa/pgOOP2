@@ -9,35 +9,15 @@ import java.util.Random;
 
 public final class Mlecz extends Roslina
 {
+    public static final char IDENTYFIKATOR_PLIKU = 'm';
     private static final int ILOSC_PROB_ROZPRZESTRZENIENIA = 3;
     private static final int KROK_ROZPRZESTRZENIANIA = 1;
-
-    private boolean sprobujZasiacRosline(Swiat swiat, int[][] uzyteMiejsca)
-    {
-        Random losowanie = new Random();
-        int zmianaX = losowanie.nextInt(2 * KROK_ROZPRZESTRZENIANIA + 1) - KROK_ROZPRZESTRZENIANIA;
-        int zmianaY = losowanie.nextInt(2 * KROK_ROZPRZESTRZENIANIA + 1) - KROK_ROZPRZESTRZENIANIA;
-        if (zmianaX == 0 && zmianaY == 0)
-            return false;
-
-        if (!swiat.CzyPunktMiesciSieNaMapie(x + zmianaX, y + zmianaY) || swiat.CzyOrganizmJestNaPolu(x + zmianaX, y + zmianaY, this.getClass()))
-            return false;
-
-        for (int i = 0; i < ILOSC_PROB_ROZPRZESTRZENIENIA; i++)
-            if (uzyteMiejsca[i][0] == x + zmianaX && uzyteMiejsca[i][1] == y + zmianaY)
-                return false;
-
-        Roslina roslina = zwrocInstancjeRosliny(x + zmianaX, y + zmianaY);
-        swiat.DodajOrganizm(roslina);
-        return true;
-    }
     
     protected Mlecz zwrocInstancjeRosliny(int x, int y)
     {
         return new Mlecz(x, y);
     }
 
-    public static final char IDENTYFIKATOR_PLIKU = 'm';
 
     public Mlecz(int x, int y)
     {
@@ -69,6 +49,26 @@ public final class Mlecz extends Roslina
             }
 
         uzyteMiejsca = null;
+    }
+
+    private boolean sprobujZasiacRosline(Swiat swiat, int[][] uzyteMiejsca)
+    {
+        Random losowanie = new Random();
+        int zmianaX = losowanie.nextInt(2 * KROK_ROZPRZESTRZENIANIA + 1) - KROK_ROZPRZESTRZENIANIA;
+        int zmianaY = losowanie.nextInt(2 * KROK_ROZPRZESTRZENIANIA + 1) - KROK_ROZPRZESTRZENIANIA;
+        if (zmianaX == 0 && zmianaY == 0)
+            return false;
+
+        if (!swiat.CzyPunktMiesciSieNaMapie(x + zmianaX, y + zmianaY) || swiat.CzyOrganizmJestNaPolu(x + zmianaX, y + zmianaY, this.getClass()))
+            return false;
+
+        for (int i = 0; i < ILOSC_PROB_ROZPRZESTRZENIENIA; i++)
+            if (uzyteMiejsca[i][0] == x + zmianaX && uzyteMiejsca[i][1] == y + zmianaY)
+                return false;
+
+        Roslina roslina = zwrocInstancjeRosliny(x + zmianaX, y + zmianaY);
+        swiat.DodajOrganizm(roslina);
+        return true;
     }
 
     @Override

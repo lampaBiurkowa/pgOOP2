@@ -8,6 +8,7 @@ import java.awt.*;
 
 public final class Guarana extends Roslina
 {
+    public static final char IDENTYFIKATOR_PLIKU = 'g';
     private static final int ZWIEKSZENIE_SILY = 3;
 
     @Override
@@ -15,7 +16,6 @@ public final class Guarana extends Roslina
     {
         return new Guarana(x, y);
     }
-    public static final char IDENTYFIKATOR_PLIKU = 'g';
 
     public Guarana(int x, int y)
     {

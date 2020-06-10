@@ -1,14 +1,18 @@
 package pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta;
 
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.Organizm;
-import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Zwierze;
+import pl.edu.pg.eti.ksg.po.projekt2.swiat.Kierunek;
+import pl.edu.pg.eti.ksg.po.projekt2.swiat.ObslugaRuchu;
 import pl.edu.pg.eti.ksg.po.projekt2.swiat.Swiat;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
 public final class Czlowiek extends Zwierze
 {
+    public static final char IDENTYFIKATOR_PLIKU = 'C';
+
     private static final int ILOSC_TUR_DO_ODTWORZENIA_SUPERMOCY = 5;
     private static final int ILOSC_TUR_DO_OSLABIENIA_SUPERMOCY = 3;
     private static final int ILOSC_TUR_Z_WAZNA_SUPERMOCA = 5;
@@ -45,7 +49,6 @@ public final class Czlowiek extends Zwierze
         return false;
     }
 
-    public static final char IDENTYFIKATOR_PLIKU = 'C';
 
     public Czlowiek(int x, int y)
     {
@@ -103,18 +106,34 @@ public final class Czlowiek extends Zwierze
         this.pozostalaIloscTurZSupermoca = pozostalaIloscTurZSupermoca;
     }
 
-    public boolean SprobujAktywowacSuperMoc()
+    public void WczytajInformacjeORuchu(Swiat swiat)
+    {
+        ObslugaRuchu obslugaRuchu = new ObslugaRuchu(swiat, this);
+        Kierunek kierunek = obslugaRuchu.CzekajNaWybor();
+        if (kierunek == Kierunek.LEWO)
+            SprubojPrzesunacO(getDlugoscKroku(), 0, swiat);
+        else if (kierunek == Kierunek.PRAWO)
+            SprubojPrzesunacO(-getDlugoscKroku(), 0, swiat);
+        else if (kierunek == Kierunek.GORA)
+            SprubojPrzesunacO(0, -getDlugoscKroku(), swiat);
+        else
+            SprubojPrzesunacO(0, getDlugoscKroku(), swiat);
+    }
+
+    public void SprobujAktywowacSuperMoc()
     {
         if (GetIloscTurDoUzyciaSupermocy() > 0)
-            return false;
+            return;
 
         pozostalaIloscTurZSupermoca = ILOSC_TUR_Z_WAZNA_SUPERMOCA;
         iloscTurDoUzyciaSupermocy = ILOSC_TUR_DO_ODTWORZENIA_SUPERMOCY;
-        return true;
     }
 
-    public void WczytajInformacjeORuchu(Swiat swiat)
+    private int getDlugoscKroku()
     {
-
+        if (pozostalaIloscTurZSupermoca > 0)
+            return KROK_Z_SUPERMOCA;
+        else
+            return DOMYSLNY_KROK;
     }
 };

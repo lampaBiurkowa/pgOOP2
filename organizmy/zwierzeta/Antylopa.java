@@ -8,38 +8,9 @@ import java.util.Random;
 
 public final class Antylopa extends Zwierze
 {
+    public static final char IDENTYFIKATOR_PLIKU = 'A';
     private static final int KROK_UCIECZKI = 1;
     private static final int SZANSA_NA_UCIECZKE_W_PROCENTACH = 50;
-
-    private boolean czyMaGdzieUciec(Swiat swiat)
-    {
-        for (int i = -KROK_UCIECZKI; i <= KROK_UCIECZKI; i++)
-            for (int j = -KROK_UCIECZKI; j <= KROK_UCIECZKI; j++)
-            {
-                if ((i == 0 && j == 0) || (i != 0 && j != 0) || !swiat.CzyPunktMiesciSieNaMapie(previousX + j, previousY + i))
-                    continue;
-
-                if (!swiat.CzyPoleZajete(previousX + j, previousY + i))
-                    return true;
-            }
-
-        return false;
-    }
-
-    private boolean sprobujUciec(Swiat swiat)
-    {
-        Random losowanie = new Random();
-        int zmianaX = losowanie.nextInt(KROK_UCIECZKI * 2 + 1) - KROK_UCIECZKI;
-        int zmianaY = losowanie.nextInt(KROK_UCIECZKI * 2 + 1) - KROK_UCIECZKI;
-
-        if ((zmianaX == 0 && zmianaY == 0) || (zmianaX != 0 && zmianaY != 0))
-            return false;
-
-        if (swiat.CzyPoleZajete (x + zmianaX, y + zmianaY))
-            return false;
-
-        return SprubojPrzesunacO(zmianaX, zmianaY, swiat);
-    }
 
     @Override
     protected Antylopa zwrocInstancjeZwierzecia(int x, int y)
@@ -47,7 +18,6 @@ public final class Antylopa extends Zwierze
         return new Antylopa(x, y);
     }
 
-    public static final char IDENTYFIKATOR_PLIKU = 'A';
 
     public Antylopa(int x, int y)
     {
@@ -87,5 +57,35 @@ public final class Antylopa extends Zwierze
 
             swiat.DodajKomunikat(nazwa + " ucieka przed " + organizm.GetNazwa());
         }
+    }
+
+    private boolean czyMaGdzieUciec(Swiat swiat)
+    {
+        for (int i = -KROK_UCIECZKI; i <= KROK_UCIECZKI; i++)
+            for (int j = -KROK_UCIECZKI; j <= KROK_UCIECZKI; j++)
+            {
+                if ((i == 0 && j == 0) || (i != 0 && j != 0) || !swiat.CzyPunktMiesciSieNaMapie(previousX + j, previousY + i))
+                    continue;
+
+                if (!swiat.CzyPoleZajete(previousX + j, previousY + i))
+                    return true;
+            }
+
+        return false;
+    }
+
+    private boolean sprobujUciec(Swiat swiat)
+    {
+        Random losowanie = new Random();
+        int zmianaX = losowanie.nextInt(KROK_UCIECZKI * 2 + 1) - KROK_UCIECZKI;
+        int zmianaY = losowanie.nextInt(KROK_UCIECZKI * 2 + 1) - KROK_UCIECZKI;
+
+        if ((zmianaX == 0 && zmianaY == 0) || (zmianaX != 0 && zmianaY != 0))
+            return false;
+
+        if (swiat.CzyPoleZajete (x + zmianaX, y + zmianaY))
+            return false;
+
+        return SprubojPrzesunacO(zmianaX, zmianaY, swiat);
     }
 };
