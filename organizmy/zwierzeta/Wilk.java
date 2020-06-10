@@ -6,13 +6,13 @@ import java.awt.*;
 
 public final class Wilk extends Zwierze
 {
+    public static final char IDENTYFIKATOR_PLIKU = 'W';
+
     @Override
     protected Wilk zwrocInstancjeZwierzecia(int x, int y)
     {
         return new Wilk(x, y);
     }
-
-    public static final char IDENTYFIKATOR_PLIKU = 'W';
 
     public Wilk(int x, int y)
     {

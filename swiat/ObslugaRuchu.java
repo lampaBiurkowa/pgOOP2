@@ -3,12 +3,14 @@ package pl.edu.pg.eti.ksg.po.projekt2.swiat;
 import pl.edu.pg.eti.ksg.po.projekt2.organizmy.zwierzeta.Czlowiek;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public final class ObslugaRuchu
 {
-    private static final int BOK_PRZYCISKU = 60;
+    private static final int WYSOKOSC_OKNA = 100;
+    private static final int SZEROKOSC_OKNA = 300;
     private static final int X_OKNA = 800;
     private static final int Y_OKNA = 100;
 
@@ -22,19 +24,19 @@ public final class ObslugaRuchu
     public ObslugaRuchu(Swiat swiat, Czlowiek czlowiek)
     {
         wybor = Kierunek.BRAK;
-        okno = new JFrame("Wybierz kieruek");
-        okno.setLayout(null);
-        okno.setVisible(true);
-        okno.setBounds(X_OKNA, Y_OKNA, 3 * BOK_PRZYCISKU, 3 * BOK_PRZYCISKU);
+        okno = new JFrame("Kieruek");
+        okno.setLayout(new FlowLayout());
+        okno.setBounds(X_OKNA, Y_OKNA, SZEROKOSC_OKNA, WYSOKOSC_OKNA);
         dodajStrzalki(swiat, czlowiek);
+        okno.setVisible(true);
     }
 
     private void dodajStrzalki(Swiat swiat, Czlowiek czlowiek)
     {
         dodajStrzalkeWLewo(swiat, czlowiek);
         dodajStrzalkeWPrawo(swiat, czlowiek);
-        dodajStrzalkeWGore(swiat, czlowiek);
         dodajStrzalkeWDol(swiat, czlowiek);
+        dodajStrzalkeWGore(swiat, czlowiek);
     }
 
     private void dodajStrzalkeWLewo(Swiat swiat, Czlowiek czlowiek)
@@ -42,7 +44,6 @@ public final class ObslugaRuchu
         lewo = new JButton("<-");
         if (czlowiek.GetX() == 0)
             lewo.setEnabled(false);
-        lewo.setBounds(0, BOK_PRZYCISKU, BOK_PRZYCISKU, BOK_PRZYCISKU);
         lewo.addMouseListener(new MouseAdapter()
         {
             public void mouseClicked(MouseEvent e)
@@ -58,7 +59,6 @@ public final class ObslugaRuchu
         prawo = new JButton("->");
         if (czlowiek.GetX() == swiat.GetSzerokosc() - 1)
             prawo.setEnabled(false);
-        prawo.setBounds(2 * BOK_PRZYCISKU, BOK_PRZYCISKU, BOK_PRZYCISKU, BOK_PRZYCISKU);
         prawo.addMouseListener(new MouseAdapter()
         {
             public void mouseClicked(MouseEvent e)
@@ -74,7 +74,6 @@ public final class ObslugaRuchu
         gora = new JButton("/\\");
         if (czlowiek.GetY() == 0)
             gora.setEnabled(false);
-        gora.setBounds(BOK_PRZYCISKU, BOK_PRZYCISKU, BOK_PRZYCISKU, BOK_PRZYCISKU);
         gora.addMouseListener(new MouseAdapter()
         {
             public void mouseClicked(MouseEvent e)
@@ -90,7 +89,6 @@ public final class ObslugaRuchu
         dol = new JButton("\\/");
         if (czlowiek.GetY() == swiat.GetWysokosc() - 1)
             dol.setEnabled(false);
-        dol.setBounds(BOK_PRZYCISKU, 0, BOK_PRZYCISKU, BOK_PRZYCISKU);
         dol.addMouseListener(new MouseAdapter()
         {
             public void mouseClicked(MouseEvent e)
@@ -111,7 +109,11 @@ public final class ObslugaRuchu
             } catch (Exception e) { }
 
             if (wybor != Kierunek.BRAK)
+            {
+                okno.setVisible(false);
+                okno = null;
                 return wybor;
+            }
         }
     }
 }

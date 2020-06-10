@@ -9,6 +9,7 @@ import java.util.Random;
 
 public final class Zolw extends Zwierze
 {
+    public static final char IDENTYFIKATOR_PLIKU = 'Z';
     private static final int MAKSYMALNA_SILA_DO_ODPARCIA = 4;
     private static final int SZANSE_NA_POZOSTANIE_W_MIEJSCU_W_PROCENTACH = 75;
 
@@ -17,7 +18,6 @@ public final class Zolw extends Zwierze
     {
         return new Zolw(x, y);
     }
-    public static final char IDENTYFIKATOR_PLIKU = 'Z';
 
     public Zolw(int x, int y)
     {

@@ -27,59 +27,30 @@ public final class BudulecSwiata
         this.okno = okno;
     }
 
-    private void dodajOdpowiedniTypOrganizmu(Swiat swiat, char znak, int x, int y)
+    public void RozstawOrganizmyLosowo(Swiat swiat, int iloscSztuk)
     {
-        if (znak == Antylopa.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new Antylopa(x, y));
-        else if (znak == BarszczSosnowskiego.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new BarszczSosnowskiego(x, y));
-        else if (znak == Czlowiek.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new Czlowiek(x, y));
-        else if (znak == Cyberowca.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new Cyberowca(x, y));
-        else if (znak == Guarana.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new Guarana(x, y));
-        else if (znak == Lis.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new Lis(x, y));
-        else if (znak == Mlecz.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new Mlecz(x, y));
-        else if (znak == Owca.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new Owca(x, y));
-        else if (znak == Trawa.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new Trawa(x, y));
-        else if (znak == WilczeJagody.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new WilczeJagody(x, y));
-        else if (znak == Wilk.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new Wilk(x, y));
-        else if (znak == Zolw.IDENTYFIKATOR_PLIKU)
-            swiat.DodajOrganizm(new Zolw(x, y));
-    }
-
-    private void obsluzPotencjalnyBladWczytywania(int oczekiwanaIloscArg, int aktualnaIloscArg)
-    {
-        if (aktualnaIloscArg != oczekiwanaIloscArg)
+        if (iloscSztuk * ILOSC_GATUNKOW_DO_LOSOWANIA + 1 > swiat.GetSzerokosc() * swiat.GetWysokosc())
         {
-            JOptionPane.showMessageDialog(null, "Blad! Ilosc argumentow w metadnych: " + aktualnaIloscArg + ", oczekiwano: " + oczekiwanaIloscArg, "Błąd", JOptionPane.ERROR_MESSAGE);
-            System.exit(-1);
+            JOptionPane.showMessageDialog(null, "Zbyt maly rozmiar swiat do zmieszczeia wszystkich gatunkow", "Błąd", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-    }
 
-    private boolean pozycjaZajeta(int x, int y, int[][] pozycje, int iloscSztuk)
-    {
-        for (int i = 0; i < iloscSztuk * ILOSC_GATUNKOW_DO_LOSOWANIA + 1; i++)
-            if (pozycje[i][0] == x && pozycje[i][1] == y)
-                return true;
-
-        return false;
-    }
-
-    private String przygotujMetadaneDoZapisu(Swiat swiat)
-    {
-        String metadane = Integer.toString(swiat.GetSzerokosc()) + SEPARATOR_W_PLIKU;
-        metadane += Integer.toString(swiat.GetWysokosc()) + SEPARATOR_W_PLIKU;
-        metadane += Integer.toString(swiat.GetNumerTury());
-
-        return metadane;
+        int[][] pozycje = przygotujPozycjeStartowe(swiat, iloscSztuk);
+        for (int i = 0; i < iloscSztuk * ILOSC_GATUNKOW_DO_LOSOWANIA; i++)
+        {
+            swiat.DodajOrganizm(new Antylopa(pozycje[i][0], pozycje[i][1])); i++;
+            swiat.DodajOrganizm(new BarszczSosnowskiego(pozycje[i][0], pozycje[i][1])); i++;
+            swiat.DodajOrganizm(new Cyberowca(pozycje[i][0], pozycje[i][1])); i++;
+            swiat.DodajOrganizm(new Guarana(pozycje[i][0], pozycje[i][1])); i++;
+            swiat.DodajOrganizm(new Lis(pozycje[i][0], pozycje[i][1])); i++;
+            swiat.DodajOrganizm(new Mlecz(pozycje[i][0], pozycje[i][1])); i++;
+            swiat.DodajOrganizm(new Owca(pozycje[i][0], pozycje[i][1])); i++;
+            swiat.DodajOrganizm(new Trawa(pozycje[i][0], pozycje[i][1])); i++;
+            swiat.DodajOrganizm(new WilczeJagody(pozycje[i][0], pozycje[i][1])); i++;
+            swiat.DodajOrganizm(new Wilk(pozycje[i][0], pozycje[i][1])); i++;
+            swiat.DodajOrganizm(new Zolw(pozycje[i][0], pozycje[i][1]));
+        }
+        swiat.DodajOrganizm(new Czlowiek(pozycje[iloscSztuk * ILOSC_GATUNKOW_DO_LOSOWANIA][0], pozycje[iloscSztuk * ILOSC_GATUNKOW_DO_LOSOWANIA][1]));
     }
 
     private int[][] przygotujPozycjeStartowe(Swiat swiat, int iloscSztuk)
@@ -108,130 +79,13 @@ public final class BudulecSwiata
         return pozycje;
     }
 
-    private void sprobujWdrozycInformacjeOSileZPliku(Swiat swiat, String zrodlo)
+    private boolean pozycjaZajeta(int x, int y, int[][] pozycje, int iloscSztuk)
     {
-        int[] dane = new int[ILOSC_ARGUMENOW_SILY];
-        int iloscParametrow = wypelnijLiczbowaTabliceZPlikuIZwrocIlosc(zrodlo, dane, 0);
-        obsluzPotencjalnyBladWczytywania(ILOSC_ARGUMENOW_SILY, iloscParametrow);
+        for (int i = 0; i < iloscSztuk * ILOSC_GATUNKOW_DO_LOSOWANIA + 1; i++)
+            if (pozycje[i][0] == x && pozycje[i][1] == y)
+                return true;
 
-        int x = dane[X_INDEKS], y = dane[Y_INDEKS];
-        int zwiekszenieSily = dane[ZWIEKSZENIE_SILY_INDEKS];
-        Organizm organizm = swiat.GetOrganizmNaPozycji(x, y);
-        if (swiat.CzyPoleZajete(x, y) && organizm instanceof Zwierze)
-        {
-            ((Zwierze)organizm).OznaczZwiekszenieSily(zwiekszenieSily);
-            organizm.SetSila(organizm.GetSila() + zwiekszenieSily);
-        }
-    }
-
-    private void sprobujWdrozycInformacjeOSupermocyZPliku(Swiat swiat, String zrodlo)
-    {
-        Czlowiek czlowiek = swiat.SprobujZnalezcCzlowieka();
-        if (czlowiek == null)
-            return;
-
-        int[] dane = new int[ILOSC_ARGUMENOW_SUPERMOCY];
-        int iloscParametrow = wypelnijLiczbowaTabliceZPlikuIZwrocIlosc(zrodlo, dane, 1);
-        obsluzPotencjalnyBladWczytywania(ILOSC_ARGUMENOW_SUPERMOCY, iloscParametrow);
-
-        czlowiek.SetPozostalaIloscTurZSupermoca(dane[POZOSTALE_TURY_Z_SUPERMOCA_INDEKS]);
-        czlowiek.SetIloscTurDoUzyciaSupermocy(dane[ILOSC_TUR_DO_AKTYWACJI_SUPERMOCY_INDEKS]);
-    }
-
-    private String sprobujZapisacInformacjeOSupermocy(Organizm organizm)
-    {
-        String informacjeOSupermocy = "";
-        if (organizm instanceof Czlowiek)
-        {
-            int pozostalaIloscTurZSupemoca = ((Czlowiek)(organizm)).GetPozostalaIloscTurZSupermoca();
-            int iloscTurDoUzyciaSupermocy = ((Czlowiek)(organizm)).GetIloscTurDoUzyciaSupermocy();
-            informacjeOSupermocy = OZNACZENIE_SUPERMOCY + Integer.toString(pozostalaIloscTurZSupemoca) + SEPARATOR_W_PLIKU + Integer.toString(iloscTurDoUzyciaSupermocy);
-        }
-
-        return informacjeOSupermocy;
-    }
-
-    private void sprobujZapisacInformacjeOZwiekszeniuSily(Organizm organizm, ArrayList<String> informacjeOSile)
-    {
-        if (organizm instanceof Zwierze)
-        {
-            int zwiekszenieSily = ((Zwierze)(organizm)).GetZwiekszenieSily();
-            if (((Zwierze)(organizm)).GetZwiekszenieSily() != 0)
-            informacjeOSile.add(Integer.toString(organizm.GetX()) + SEPARATOR_W_PLIKU + Integer.toString(organizm.GetY()) + SEPARATOR_W_PLIKU + Integer.toString(zwiekszenieSily));
-        }
-    }
-
-    private void wdrozMetadane(Swiat swiat, String zrodlo)
-    {
-        int[] dane = new int[ILOSC_ARGUMENOW_METADANYCH];
-        int iloscParametrow = wypelnijLiczbowaTabliceZPlikuIZwrocIlosc(zrodlo, dane, 0);
-        obsluzPotencjalnyBladWczytywania(ILOSC_ARGUMENOW_METADANYCH, iloscParametrow);
-        swiat.Stworz(dane[X_INDEKS], dane[Y_INDEKS], dane[NUMER_TURY_INDEKS], okno);
-    }
-
-    private void wdrozPozostaleInformacjeZPliku(Swiat swiat, String zrodlo)
-    {
-        if (zrodlo.length() == 0)
-            return;
-
-        if (zrodlo.charAt(0) == OZNACZENIE_SUPERMOCY)
-            sprobujWdrozycInformacjeOSupermocyZPliku(swiat, zrodlo);
-        else
-            sprobujWdrozycInformacjeOSileZPliku(swiat, zrodlo);
-    }
-
-    private void wykonajZapisDanych(String sciezka, String metadane, ArrayList<String> linieMapy, ArrayList<String> informacjeOSile, String informacjeOSupermocy) throws IOException
-    {
-        FileWriter zapis = new FileWriter(sciezka);
-        zapis.write(metadane);
-        for (String s : linieMapy) zapis.append(s);
-        for (String s : informacjeOSile) zapis.append(s);
-        zapis.append(informacjeOSupermocy);
-        zapis.close();
-    }
-
-    private int wypelnijLiczbowaTabliceZPlikuIZwrocIlosc(String zrodlo, int[] tablicaDocelowa, int startIteracji)
-    {
-        String numer = "";
-        int iterator = 0;
-        for (int i = startIteracji; i < zrodlo.length(); i++)
-        {
-            if (zrodlo.charAt(i) != SEPARATOR_W_PLIKU)
-                numer += zrodlo.charAt(i);
-            if (zrodlo.charAt(i) == SEPARATOR_W_PLIKU || i == zrodlo.length() - 1)
-            {
-                tablicaDocelowa[iterator++] = Integer.parseInt(numer);
-                numer = "";
-            }
-        }
-
-        return iterator;
-    }
-
-    public void RozstawOrganizmyLosowo(Swiat swiat, int iloscSztuk)
-    {
-        if (iloscSztuk * ILOSC_GATUNKOW_DO_LOSOWANIA + 1 > swiat.GetSzerokosc() * swiat.GetWysokosc())
-        {
-            JOptionPane.showMessageDialog(null, "Zbyt maly rozmiar swiat do zmieszczeia wszystkich gatunkow", "Błąd", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int[][] pozycje = przygotujPozycjeStartowe(swiat, iloscSztuk);
-        for (int i = 0; i < iloscSztuk * ILOSC_GATUNKOW_DO_LOSOWANIA; i++)
-        {
-            swiat.DodajOrganizm(new Antylopa(pozycje[i][0], pozycje[i][1])); i++;
-            swiat.DodajOrganizm(new BarszczSosnowskiego(pozycje[i][0], pozycje[i][1])); i++;
-            swiat.DodajOrganizm(new Cyberowca(pozycje[i][0], pozycje[i][1])); i++;
-            swiat.DodajOrganizm(new Guarana(pozycje[i][0], pozycje[i][1])); i++;
-            swiat.DodajOrganizm(new Lis(pozycje[i][0], pozycje[i][1])); i++;
-            swiat.DodajOrganizm(new Mlecz(pozycje[i][0], pozycje[i][1])); i++;
-            swiat.DodajOrganizm(new Owca(pozycje[i][0], pozycje[i][1])); i++;
-            swiat.DodajOrganizm(new Trawa(pozycje[i][0], pozycje[i][1])); i++;
-            swiat.DodajOrganizm(new WilczeJagody(pozycje[i][0], pozycje[i][1])); i++;
-            swiat.DodajOrganizm(new Wilk(pozycje[i][0], pozycje[i][1])); i++;
-            swiat.DodajOrganizm(new Zolw(pozycje[i][0], pozycje[i][1]));
-        }
-        swiat.DodajOrganizm(new Czlowiek(pozycje[iloscSztuk * ILOSC_GATUNKOW_DO_LOSOWANIA][0], pozycje[iloscSztuk * ILOSC_GATUNKOW_DO_LOSOWANIA][1]));
+        return false;
     }
 
     public void WczytajZPliku(Swiat swiat, String sciezka) throws FileNotFoundException
@@ -253,6 +107,110 @@ public final class BudulecSwiata
             wdrozPozostaleInformacjeZPliku(swiat, linia);
         }
         skaner.close();
+    }
+
+    private void wdrozMetadane(Swiat swiat, String zrodlo)
+    {
+        int[] dane = new int[ILOSC_ARGUMENOW_METADANYCH];
+        int iloscParametrow = wypelnijLiczbowaTabliceZPlikuIZwrocIlosc(zrodlo, dane, 0);
+        obsluzPotencjalnyBladWczytywania(ILOSC_ARGUMENOW_METADANYCH, iloscParametrow);
+        swiat.Stworz(dane[X_INDEKS], dane[Y_INDEKS], dane[NUMER_TURY_INDEKS], okno);
+    }
+
+    private void obsluzPotencjalnyBladWczytywania(int oczekiwanaIloscArg, int aktualnaIloscArg)
+    {
+        if (aktualnaIloscArg != oczekiwanaIloscArg)
+        {
+            JOptionPane.showMessageDialog(null, "Blad! Ilosc argumentow w metadnych: " + aktualnaIloscArg + ", oczekiwano: " + oczekiwanaIloscArg, "Błąd", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
+    }
+
+    private int wypelnijLiczbowaTabliceZPlikuIZwrocIlosc(String zrodlo, int[] tablicaDocelowa, int startIteracji)
+    {
+        String numer = "";
+        int iterator = 0;
+        for (int i = startIteracji; i < zrodlo.length(); i++)
+        {
+            if (zrodlo.charAt(i) != SEPARATOR_W_PLIKU)
+                numer += zrodlo.charAt(i);
+            if (zrodlo.charAt(i) == SEPARATOR_W_PLIKU || i == zrodlo.length() - 1)
+            {
+                tablicaDocelowa[iterator++] = Integer.parseInt(numer);
+                numer = "";
+            }
+        }
+
+        return iterator;
+    }
+
+    private void dodajOdpowiedniTypOrganizmu(Swiat swiat, char znak, int x, int y)
+    {
+        if (znak == Antylopa.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new Antylopa(x, y));
+        else if (znak == BarszczSosnowskiego.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new BarszczSosnowskiego(x, y));
+        else if (znak == Czlowiek.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new Czlowiek(x, y));
+        else if (znak == Cyberowca.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new Cyberowca(x, y));
+        else if (znak == Guarana.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new Guarana(x, y));
+        else if (znak == Lis.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new Lis(x, y));
+        else if (znak == Mlecz.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new Mlecz(x, y));
+        else if (znak == Owca.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new Owca(x, y));
+        else if (znak == Trawa.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new Trawa(x, y));
+        else if (znak == WilczeJagody.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new WilczeJagody(x, y));
+        else if (znak == Wilk.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new Wilk(x, y));
+        else if (znak == Zolw.IDENTYFIKATOR_PLIKU)
+            swiat.DodajOrganizm(new Zolw(x, y));
+    }
+
+    private void wdrozPozostaleInformacjeZPliku(Swiat swiat, String zrodlo)
+    {
+        if (zrodlo.length() == 0)
+            return;
+
+        if (zrodlo.charAt(0) == OZNACZENIE_SUPERMOCY)
+            sprobujWdrozycInformacjeOSupermocyZPliku(swiat, zrodlo);
+        else
+            sprobujWdrozycInformacjeOSileZPliku(swiat, zrodlo);
+    }
+
+    private void sprobujWdrozycInformacjeOSupermocyZPliku(Swiat swiat, String zrodlo)
+    {
+        Czlowiek czlowiek = swiat.SprobujZnalezcCzlowieka();
+        if (czlowiek == null)
+            return;
+
+        int[] dane = new int[ILOSC_ARGUMENOW_SUPERMOCY];
+        int iloscParametrow = wypelnijLiczbowaTabliceZPlikuIZwrocIlosc(zrodlo, dane, 1);
+        obsluzPotencjalnyBladWczytywania(ILOSC_ARGUMENOW_SUPERMOCY, iloscParametrow);
+
+        czlowiek.SetPozostalaIloscTurZSupermoca(dane[POZOSTALE_TURY_Z_SUPERMOCA_INDEKS]);
+        czlowiek.SetIloscTurDoUzyciaSupermocy(dane[ILOSC_TUR_DO_AKTYWACJI_SUPERMOCY_INDEKS]);
+    }
+
+    private void sprobujWdrozycInformacjeOSileZPliku(Swiat swiat, String zrodlo)
+    {
+        int[] dane = new int[ILOSC_ARGUMENOW_SILY];
+        int iloscParametrow = wypelnijLiczbowaTabliceZPlikuIZwrocIlosc(zrodlo, dane, 0);
+        obsluzPotencjalnyBladWczytywania(ILOSC_ARGUMENOW_SILY, iloscParametrow);
+
+        int x = dane[X_INDEKS], y = dane[Y_INDEKS];
+        int zwiekszenieSily = dane[ZWIEKSZENIE_SILY_INDEKS];
+        Organizm organizm = swiat.GetOrganizmNaPozycji(x, y);
+        if (swiat.CzyPoleZajete(x, y) && organizm instanceof Zwierze)
+        {
+            ((Zwierze)organizm).OznaczZwiekszenieSily(zwiekszenieSily);
+            organizm.SetSila(organizm.GetSila() + zwiekszenieSily);
+        }
     }
 
     public void ZapiszDoPliku(Swiat swiat, String sciezka)
@@ -290,5 +248,47 @@ public final class BudulecSwiata
         catch (Exception e)
         {
         }
+    }
+
+    private void sprobujZapisacInformacjeOZwiekszeniuSily(Organizm organizm, ArrayList<String> informacjeOSile)
+    {
+        if (organizm instanceof Zwierze)
+        {
+            int zwiekszenieSily = ((Zwierze)(organizm)).GetZwiekszenieSily();
+            if (((Zwierze)(organizm)).GetZwiekszenieSily() != 0)
+                informacjeOSile.add(Integer.toString(organizm.GetX()) + SEPARATOR_W_PLIKU + Integer.toString(organizm.GetY()) + SEPARATOR_W_PLIKU + Integer.toString(zwiekszenieSily));
+        }
+    }
+
+    private String sprobujZapisacInformacjeOSupermocy(Organizm organizm)
+    {
+        String informacjeOSupermocy = "";
+        if (organizm instanceof Czlowiek)
+        {
+            int pozostalaIloscTurZSupemoca = ((Czlowiek)(organizm)).GetPozostalaIloscTurZSupermoca();
+            int iloscTurDoUzyciaSupermocy = ((Czlowiek)(organizm)).GetIloscTurDoUzyciaSupermocy();
+            informacjeOSupermocy = OZNACZENIE_SUPERMOCY + Integer.toString(pozostalaIloscTurZSupemoca) + SEPARATOR_W_PLIKU + Integer.toString(iloscTurDoUzyciaSupermocy);
+        }
+
+        return informacjeOSupermocy;
+    }
+
+    private String przygotujMetadaneDoZapisu(Swiat swiat)
+    {
+        String metadane = Integer.toString(swiat.GetSzerokosc()) + SEPARATOR_W_PLIKU;
+        metadane += swiat.GetWysokosc() + SEPARATOR_W_PLIKU;
+        metadane += swiat.GetNumerTury() + "\n";
+
+        return metadane;
+    }
+
+    private void wykonajZapisDanych(String sciezka, String metadane, ArrayList<String> linieMapy, ArrayList<String> informacjeOSile, String informacjeOSupermocy) throws IOException
+    {
+        FileWriter zapis = new FileWriter(sciezka);
+        zapis.write(metadane);
+        for (String s : linieMapy) zapis.append(s);
+        for (String s : informacjeOSile) zapis.append(s);
+        zapis.append(informacjeOSupermocy);
+        zapis.close();
     }
 };

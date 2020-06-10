@@ -111,9 +111,9 @@ public final class Czlowiek extends Zwierze
         ObslugaRuchu obslugaRuchu = new ObslugaRuchu(swiat, this);
         Kierunek kierunek = obslugaRuchu.CzekajNaWybor();
         if (kierunek == Kierunek.LEWO)
-            SprubojPrzesunacO(getDlugoscKroku(), 0, swiat);
-        else if (kierunek == Kierunek.PRAWO)
             SprubojPrzesunacO(-getDlugoscKroku(), 0, swiat);
+        else if (kierunek == Kierunek.PRAWO)
+            SprubojPrzesunacO(getDlugoscKroku(), 0, swiat);
         else if (kierunek == Kierunek.GORA)
             SprubojPrzesunacO(0, -getDlugoscKroku(), swiat);
         else

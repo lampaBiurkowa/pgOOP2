@@ -6,12 +6,13 @@ import java.awt.*;
 
 public final class Owca extends Zwierze
 {
+    public static final char IDENTYFIKATOR_PLIKU = 'O';
+
     @Override
     protected Owca zwrocInstancjeZwierzecia(int x, int y)
     {
         return new Owca(x, y);
     }
-    public static final char IDENTYFIKATOR_PLIKU = 'O';
 
     public Owca(int x, int y)
     {

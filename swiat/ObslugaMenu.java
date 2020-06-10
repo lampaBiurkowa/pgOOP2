@@ -34,7 +34,7 @@ public final class ObslugaMenu
         if (czlowiek == null)
             return;
 
-        JOptionPane.showMessageDialog(okno, getTekstInformacji(czlowiek), "Stan gry", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(okno, getTekstInformacji(czlowiek, swiat), "Stan gry", JOptionPane.INFORMATION_MESSAGE);
         if (czlowiek.GetIloscTurDoUzyciaSupermocy() == 0)
         {
             int wybor = JOptionPane.showConfirmDialog(okno, "Czy aktywować supermoc?", "Supermoc", JOptionPane.YES_NO_OPTION);
@@ -44,12 +44,13 @@ public final class ObslugaMenu
         czlowiek.WczytajInformacjeORuchu(swiat);
     }
 
-    private String getTekstInformacji(Czlowiek czlowiek)
+    private String getTekstInformacji(Czlowiek czlowiek, Swiat swiat)
     {
-        String informacjeSila = "Twoja siła: " + czlowiek.GetSila();
+        String informacjaOTurze = "Tura numer: " + swiat.GetNumerTury();
+        String informacjeSila = "\nTwoja siła: " + czlowiek.GetSila();
         String informacjeTuryZSupermoca = "\nPozostala ilosc tur z wazna supermoca: " + czlowiek.GetPozostalaIloscTurZSupermoca();
         String informacjePonownaAktywacja = "\nIlosc tur do ponownego aktywowania supermocy: " + (czlowiek.GetIloscTurDoUzyciaSupermocy() + czlowiek.GetPozostalaIloscTurZSupermoca());
-        return informacjeSila + informacjeTuryZSupermoca + informacjePonownaAktywacja;
+        return informacjaOTurze + informacjeSila + informacjeTuryZSupermoca + informacjePonownaAktywacja;
     }
 
     private void obslozSymulacje()
@@ -127,7 +128,6 @@ public final class ObslugaMenu
     {
         okno = new JFrame();
         okno.setVisible(true);
-        okno.setLayout(null);
 
         obsluzInicjalizacjePaskaMenu();
 
